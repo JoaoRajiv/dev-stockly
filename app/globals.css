@@ -4,5 +4,134 @@
 
 html,
 body {
-  @apply h-full bg-gray-200;
+  @apply h-full;
+}
+
+body {
+  @apply bg-gray-200;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+
+    --foreground: 178 84% 10%;
+
+    --card: 0 0% 100%;
+
+    --card-foreground: 178 84% 10%;
+
+    --popover: 0 0% 100%;
+
+    --popover-foreground: 178 84% 10%;
+
+    --primary: 173 80% 32%;
+
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 166 76% 97%;
+
+    --secondary-foreground: 175 59% 30%;
+
+    --muted: 166 76% 97%;
+
+    --muted-foreground: 176 30% 45%;
+
+    --accent: 166 76% 97%;
+
+    --accent-foreground: 175 59% 19%;
+
+    --destructive: 0 84.2% 60.2%;
+
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 167 85% 89%;
+
+    --input: 167 85% 89%;
+
+    --ring: 173 80% 32%;
+
+    --chart-1: 173 80% 32%;
+
+    --chart-2: 175 77% 26%;
+
+    --chart-3: 175 59% 19%;
+
+    --chart-4: 167 71% 50%;
+
+    --chart-5: 167 85% 78%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 173 80% 32%;
+    --chart-2: 175 77% 26%;
+    --chart-3: 175 59% 19%;
+    --chart-4: 167 71% 50%;
+    --chart-5: 167 85% 78%;
+  }
+
+  .dark {
+    --background: 178 50% 5%;
+
+    --foreground: 166 76% 97%;
+
+    --card: 178 50% 5%;
+
+    --card-foreground: 166 76% 97%;
+
+    --popover: 178 50% 5%;
+
+    --popover-foreground: 166 76% 97%;
+
+    --primary: 167 71% 50%;
+
+    --primary-foreground: 178 84% 10%;
+
+    --secondary: 175 59% 15%;
+
+    --secondary-foreground: 166 76% 97%;
+
+    --muted: 175 59% 15%;
+
+    --muted-foreground: 167 30% 65%;
+
+    --accent: 175 59% 15%;
+
+    --accent-foreground: 166 76% 97%;
+
+    --destructive: 0 62.8% 30.6%;
+
+    --destructive-foreground: 166 76% 97%;
+
+    --border: 175 59% 19%;
+
+    --input: 175 59% 19%;
+
+    --ring: 167 71% 50%;
+
+    --chart-1: 167 71% 50%;
+
+    --chart-2: 167 76% 64%;
+
+    --chart-3: 167 85% 78%;
+
+    --chart-4: 173 80% 32%;
+
+    --chart-5: 175 77% 26%;
+
+    --chart-1: 167 71% 50%;
+    --chart-2: 167 76% 64%;
+    --chart-3: 167 85% 78%;
+    --chart-4: 173 80% 32%;
+    --chart-5: 175 77% 26%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
