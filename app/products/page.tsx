@@ -1,13 +1,13 @@
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
-import { db } from "@/app/_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { productTableColumns } from "./_components/table-columns";
 import { Card } from "../_components/ui/card";
+import { getProducts } from "../_data-access/products/get-products";
 
 export default async function Home() {
   // chamar banco
-  const products = await db.product.findMany();
+  const products = await getProducts();
   return (
     <Card className="m-4 w-full space-y-8 p-8">
       <div className="flex w-full items-center justify-between">

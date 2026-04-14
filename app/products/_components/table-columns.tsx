@@ -7,7 +7,6 @@ import { CircleIcon } from "lucide-react";
 
 const getStatusLabel = (stock: number) => {
   if (stock === 0) return "Esgotado";
-  if (stock < 5) return "Baixo";
   return "Em estoque";
 };
 
@@ -19,6 +18,14 @@ export const productTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "price",
     header: "Valor unit.",
+    cell: ({ row }) => {
+      const price = parseFloat(row.getValue("price"));
+      const formattedPrice = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(price);
+      return formattedPrice;
+    },
   },
   {
     accessorKey: "stock",
@@ -32,24 +39,12 @@ export const productTableColumns: ColumnDef<Product>[] = [
       const label = getStatusLabel(product.stock);
       return (
         <Badge
-          variant={
-            label === "Esgotado"
-              ? "destructive"
-              : label === "Baixo"
-                ? "secondary"
-                : "default"
-          }
-          className="gap-1.5"
+          variant={label === "Esgotado" ? "destructive" : "default"}
+          className="gap-1.5 text-xs text-white"
         >
           <CircleIcon
             size={10}
-            className={
-              label === "Esgotado"
-                ? "text-destructive"
-                : label === "Baixo"
-                  ? "text-secondary"
-                  : "text-green-500"
-            }
+            className={label === "Esgotado" ? "" : "text-secondary"}
           />
           {label}
         </Badge>
