@@ -8,7 +8,7 @@ body {
 }
 
 body {
-  @apply bg-gray-200;
+  @apply bg-teal-50;
 }
 
 @layer base {
@@ -47,7 +47,7 @@ body {
 
     --border: 167 85% 89%;
 
-    --input: 167 85% 89%;
+    --input: 170 85% 40%;
 
     --ring: 173 80% 32%;
 
