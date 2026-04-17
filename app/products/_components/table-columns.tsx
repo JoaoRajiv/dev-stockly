@@ -19,9 +19,23 @@ import {
   TrashIcon,
 } from "lucide-react";
 
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+} from "@/app/_components/ui/alert-dialog";
+import DeleteProductDialogContent from "./delete-dialog";
+import { toast } from "sonner";
+
 const getStatusLabel = (stock: number) => {
   if (stock === 0) return "Esgotado";
   return "Em estoque";
+};
+
+const handleClipboardCopy = (text: string, productName: string) => {
+  navigator.clipboard.writeText(text);
+  toast.success(
+    `ID do produto "${productName}" copiado para a área de transferência!`,
+  );
 };
 
 export const productTableColumns: ColumnDef<Product>[] = [
@@ -70,32 +84,37 @@ export const productTableColumns: ColumnDef<Product>[] = [
     cell: ({ row }) => {
       const product = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <MoreHorizontalIcon size={20} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+        <AlertDialog>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                <MoreHorizontalIcon size={20} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Ações</DropdownMenuLabel>
+              <DropdownMenuSeparator />
 
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product.id)}
-            >
-              <ClipboardCopyIcon size={16} />
-              Copiar ID
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <PencilIcon size={16} className="mr-2" />
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <TrashIcon size={16} className="mr-2" />
-              Excluir
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuItem
+                onClick={() => handleClipboardCopy(product.id, product.name)}
+              >
+                <ClipboardCopyIcon size={16} />
+                Copiar ID
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <PencilIcon size={16} />
+                Editar
+              </DropdownMenuItem>
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem>
+                  <TrashIcon size={16} />
+                  Excluir
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DeleteProductDialogContent productId={product.id} />
+        </AlertDialog>
       );
     },
   },
