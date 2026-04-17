@@ -33,9 +33,7 @@ const getStatusLabel = (stock: number) => {
 
 const handleClipboardCopy = (text: string, productName: string) => {
   navigator.clipboard.writeText(text);
-  toast.success(
-    `ID do produto "${productName}" copiado para a área de transferência!`,
-  );
+  toast.success(`ID do produto "${productName}" copiado!`);
 };
 
 export const productTableColumns: ColumnDef<Product>[] = [
