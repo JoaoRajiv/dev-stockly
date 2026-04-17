@@ -20,33 +20,22 @@ import {
   FormMessage,
 } from "@/app/_components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon } from "lucide-react";
+import { Loader2Icon, PlusIcon } from "lucide-react";
 import { Input } from "@/app/_components/ui/input";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { NumericFormat } from "react-number-format";
+import { createProduct } from "@/app/_actions/product/create-product/create-product";
+import { useState } from "react";
+import {
+  CreateProductSchema,
+  createProductSchema,
+} from "@/app/_actions/product/create-product/schema";
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "O nome deve ter pelo menos 1 caractere." })
-    .trim(),
-  price: z
-    .number()
-    .int()
-    .positive({ message: "O preço deve ser um número positivo." }),
-  stock: z.coerce
-    .number()
-    .int()
-    .positive({ message: "O estoque deve ser um número positivo." }),
-});
-
-type FormData = z.infer<typeof formSchema>;
-
-const AddProductButton = () => {
-  const form = useForm<FormData>({
+const CreateProductButton = () => {
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const form = useForm<CreateProductSchema>({
     shouldUnregister: true,
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createProductSchema),
     defaultValues: {
       name: "",
       price: 0,
@@ -54,12 +43,17 @@ const AddProductButton = () => {
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Produto criado:", data);
+  const onSubmit = async (data: CreateProductSchema) => {
+    try {
+      await createProduct(data);
+      setDialogIsOpen(false);
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <DialogTrigger asChild>
         <Button>
           <PlusIcon size={20} />
@@ -88,7 +82,7 @@ const AddProductButton = () => {
                 </FormItem>
               )}
             />
-            <div className="flex gap-4">
+            <div className="flex justify-between gap-4">
               <FormField
                 control={form.control}
                 name="price"
@@ -100,7 +94,6 @@ const AddProductButton = () => {
                         thousandSeparator="."
                         decimalSeparator=","
                         fixedDecimalScale={true}
-                        decimalScale={2}
                         prefix="R$ "
                         allowNegative={false}
                         customInput={Input}
@@ -127,6 +120,7 @@ const AddProductButton = () => {
                         placeholder="Digite o estoque do produto"
                         {...field}
                         type="number"
+                        onFocus={(e) => e.target.select()}
                       />
                     </FormControl>
                     <FormMessage />
@@ -136,9 +130,16 @@ const AddProductButton = () => {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancelar</Button>
+                <Button variant="outline" className="transition-all">
+                  Cancelar
+                </Button>
               </DialogClose>
-              <Button type="submit">Criar Produto</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
+                  <Loader2Icon className="animate-spin" />
+                )}
+                Criar Produto
+              </Button>
             </DialogFooter>
           </form>
         </Form>
@@ -147,4 +148,4 @@ const AddProductButton = () => {
   );
 };
 
-export default AddProductButton;
+export default CreateProductButton;
