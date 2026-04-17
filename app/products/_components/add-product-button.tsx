@@ -24,7 +24,7 @@ import { Loader2Icon, PlusIcon } from "lucide-react";
 import { Input } from "@/app/_components/ui/input";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
-import { createProduct } from "@/app/_actions/product/create-product/create-product";
+import { createProduct } from "@/app/_actions/product/create-product";
 import { useState } from "react";
 import {
   CreateProductSchema,
@@ -121,6 +121,10 @@ const CreateProductButton = () => {
                         {...field}
                         type="number"
                         onFocus={(e) => e.target.select()}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          field.onChange(val === "" ? "" : Number(val));
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
