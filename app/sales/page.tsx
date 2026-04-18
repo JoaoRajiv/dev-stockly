@@ -5,13 +5,17 @@ import { Sheet, SheetTrigger } from "../_components/ui/sheet";
 import UpsertSheetContent from "./_components/upsert-sheet-content";
 import { getProducts } from "../_data-access/products/get-products";
 import { ComboboxOption } from "../_components/ui/combobox";
+import { Product } from "@prisma/client";
 
 const SalesPage = async () => {
   const products = await getProducts();
-  const productsOptions: ComboboxOption[] = products.map((product) => ({
-    label: product.name,
-    value: product.id,
-  }));
+  const formatedProducts = JSON.parse(JSON.stringify(products));
+  const productsOptions: ComboboxOption[] = formatedProducts.map(
+    (product: Product) => ({
+      label: product.name,
+      value: product.id,
+    }),
+  );
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md">
       <div className="flex w-full items-center justify-between">
@@ -29,7 +33,7 @@ const SalesPage = async () => {
             </Button>
           </SheetTrigger>
           <UpsertSheetContent
-            products={products}
+            products={formatedProducts}
             productsOptions={productsOptions}
           />
         </Sheet>

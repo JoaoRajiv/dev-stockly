@@ -33,6 +33,7 @@ import { PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import SalesDropDownMenu from "./table-dropdown-menu";
 
 const formSchema = z.object({
   productId: z.string().uuid({
@@ -107,6 +108,12 @@ const UpsertSheetContent = ({
     );
   }, [selectedProduct]);
 
+  const onDelete = (productId: string) => {
+    setSelectedProduct((currentProducts) =>
+      currentProducts.filter((product) => product.id !== productId),
+    );
+  };
+
   return (
     <SheetContent className="!max-w-[700px]">
       <SheetHeader className="py-6">
@@ -157,13 +164,17 @@ const UpsertSheetContent = ({
       </Form>
       {/* Tabela  */}
       <Table>
-        <TableCaption>Produtos adicionados à venda</TableCaption>
+        <TableCaption>
+          <span className="h-2.5 w-2.5 rounded-full bg-primary">a</span>
+          Produtos adicionados à venda
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Produto</TableHead>
             <TableHead>Preço unit.</TableHead>
             <TableHead className="text-center">Quantidade</TableHead>
             <TableHead>Total</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -175,6 +186,12 @@ const UpsertSheetContent = ({
               <TableCell>
                 {formatCurrency(product.price * product.quantity)}
               </TableCell>
+              <TableCell>
+                <SalesDropDownMenu
+                  onDelete={onDelete}
+                  product={{ id: product.id, name: product.name }}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -182,6 +199,7 @@ const UpsertSheetContent = ({
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell>{formatCurrency(productsTotalPrice)}</TableCell>
+            <TableCell />
           </TableRow>
         </TableFooter>
       </Table>
