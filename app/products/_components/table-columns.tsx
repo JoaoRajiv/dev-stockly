@@ -48,12 +48,11 @@ export const productTableColumns: ColumnDef<Product>[] = [
     accessorKey: "price",
     header: "Valor unit.",
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
-      const formattedPrice = new Intl.NumberFormat("pt-BR", {
+      const product = row.original;
+      return Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(price);
-      return formattedPrice;
+      }).format(Number(product.price));
     },
   },
   {
@@ -63,8 +62,8 @@ export const productTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: (row) => {
-      const product = row.row.original;
+    cell: ({ row }) => {
+      const product = row.original;
       const label = getStatusLabel(product.stock);
       return (
         <Badge
@@ -82,8 +81,8 @@ export const productTableColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "actions",
     header: "Ações",
-    cell: (row) => {
-      const product = row.row.original;
+    cell: ({ row }) => {
+      const product = row.original;
       const [editDialogIsOpen, setEditDialogIsOpen] = useState(false);
       return (
         <AlertDialog>
