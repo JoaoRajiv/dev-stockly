@@ -1,10 +1,10 @@
 "use client";
 
-import { createProduct } from "@/app/_actions/product/create-product";
+import { upsertProducts } from "@/app/_actions/product/upsert-product";
 import {
-  createProductSchema,
-  CreateProductSchema,
-} from "@/app/_actions/product/create-product/schema";
+  upsertProductSchema,
+  UpsertProductSchema,
+} from "@/app/_actions/product/upsert-product/schema";
 import { Button } from "@/app/_components/ui/button";
 import {
   DialogContent,
@@ -27,38 +27,54 @@ import { Loader2Icon } from "lucide-react";
 import { Input } from "@/app/_components/ui/input";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
+import { toast } from "sonner";
+import { useState } from "react";
 
 interface UpsertProductDialogContentProps {
+  defaultValues?: UpsertProductSchema;
   onSuccess?: () => void;
 }
 
 const UpsertProductDialogContent = ({
+  defaultValues,
   onSuccess,
 }: UpsertProductDialogContentProps) => {
-  const form = useForm<CreateProductSchema>({
+  const form = useForm<UpsertProductSchema>({
     shouldUnregister: true,
-    resolver: zodResolver(createProductSchema),
-    defaultValues: {
+    resolver: zodResolver(upsertProductSchema),
+
+    defaultValues: defaultValues ?? {
+      id: "",
       name: "",
       price: 0,
       stock: 0,
     },
   });
 
-  const onSubmit = async (data: CreateProductSchema) => {
+  const isEditting = !!defaultValues;
+
+  const onSubmit = async (data: UpsertProductSchema) => {
     try {
-      await createProduct(data);
+      await upsertProducts({ ...data, id: defaultValues?.id });
+      toast.success(
+        `Produto ${isEditting ? "atualizado" : "criado"} com sucesso!`,
+      );
       onSuccess?.();
     } catch (error) {
       console.error("Error creating product:", error);
+      toast.error("Erro ao criar produto.");
     }
   };
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Criar Produto</DialogTitle>
+        <DialogTitle>
+          {isEditting ? "Editar Produto" : "Criar Produto"}
+        </DialogTitle>
         <DialogDescription>
-          Aqui você pode criar um novo produto para o seu catálogo.
+          {isEditting
+            ? "Aqui você pode editar um produto existente."
+            : "Aquí você pode criar um novo produto para o seu catálogo."}
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
@@ -88,7 +104,6 @@ const UpsertProductDialogContent = ({
                       thousandSeparator="."
                       decimalSeparator=","
                       fixedDecimalScale={true}
-                      decimalScale={2}
                       prefix="R$ "
                       allowNegative={false}
                       customInput={Input}
@@ -135,7 +150,7 @@ const UpsertProductDialogContent = ({
               {form.formState.isSubmitting && (
                 <Loader2Icon className="animate-spin" />
               )}
-              Criar Produto
+              {isEditting ? "Salvar Alterações" : "Criar Produto"}
             </Button>
           </DialogFooter>
         </form>
