@@ -73,12 +73,23 @@ const UpsertSheetContent = ({
     const selectedProduct = products.find(
       (product) => product.id === data.productId,
     );
+
     if (!selectedProduct) return;
     setSelectedProduct((currentProducts) => {
       const existingProduct = currentProducts.find(
         (product) => product.id === selectedProduct.id,
       );
+
       if (existingProduct) {
+        const productIsOutOfStock =
+          existingProduct.quantity + data.quantity > selectedProduct.stock;
+        if (productIsOutOfStock) {
+          form.setError("quantity", {
+            message: `Quantidade excede o estoque disponível (${selectedProduct.stock})`,
+          });
+          return currentProducts;
+        }
+        form.reset();
         return currentProducts.map((product) => {
           if (product.id === selectedProduct.id) {
             return {
@@ -89,6 +100,14 @@ const UpsertSheetContent = ({
           return product;
         });
       }
+
+      if (data.quantity > selectedProduct.stock) {
+        form.setError("quantity", {
+          message: `Quantidade excede o estoque disponível (${selectedProduct.stock})`,
+        });
+        return currentProducts;
+      }
+      form.reset();
       return [
         ...currentProducts,
         {
@@ -98,7 +117,6 @@ const UpsertSheetContent = ({
         },
       ];
     });
-    form.reset();
   };
 
   const productsTotalPrice = useMemo(() => {
@@ -149,6 +167,10 @@ const UpsertSheetContent = ({
                   <Input
                     type="number"
                     placeholder="Digite o nome do produto"
+                    onFocus={(e) => {
+                      e.target.select();
+                      form.clearErrors("quantity");
+                    }}
                     {...field}
                   />
                 </FormControl>
