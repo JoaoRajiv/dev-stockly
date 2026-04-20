@@ -187,8 +187,10 @@ const UpsertSheetContent = ({
       {/* Tabela  */}
       <Table>
         <TableCaption>
-          <span className="h-2.5 w-2.5 rounded-full bg-primary">a</span>
-          Produtos adicionados à venda
+          <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+            <div className="animate-fade h-3 w-3 rounded-full bg-green-500"></div>
+            <p>Produtos adicionados à venda</p>
+          </div>
         </TableCaption>
         <TableHeader>
           <TableRow>
