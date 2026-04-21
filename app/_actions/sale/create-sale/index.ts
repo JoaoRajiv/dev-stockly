@@ -53,5 +53,5 @@ export const createSale = actionClient
         });
       }
     });
-    revalidateTag("products");
+    revalidateTag("get-products");
   });
