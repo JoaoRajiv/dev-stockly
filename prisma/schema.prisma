@@ -24,13 +24,11 @@ model Product {
 }
 
 model Sale {
-  id            String        @id @default(uuid())
-  date          DateTime
-  totalQuantity Int
-  totalPrice    Decimal       @db.Decimal(10, 2)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  products      SaleProduct[]
+  id        String        @id @default(uuid())
+  date      DateTime
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  products  SaleProduct[]
 }
 
 model SaleProduct {

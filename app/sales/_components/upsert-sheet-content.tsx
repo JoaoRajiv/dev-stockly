@@ -13,6 +13,7 @@ import { Input } from "@/app/_components/ui/input";
 import {
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/app/_components/ui/sheet";
@@ -29,11 +30,14 @@ import {
 import { formatCurrency } from "@/app/_helpers/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from "@prisma/client";
-import { PlusIcon } from "lucide-react";
+import { CheckIcon, PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import SalesDropDownMenu from "./table-dropdown-menu";
+import { createSale } from "@/app/_actions/sale/create-sale";
+import { toast } from "sonner";
+import { cachedGetProducts } from "@/app/_data-access/products/get-products";
 
 const formSchema = z.object({
   productId: z.string().uuid({
@@ -47,6 +51,7 @@ type FormSchema = z.infer<typeof formSchema>;
 interface UpsertSheetContentProps {
   products: Product[];
   productsOptions: ComboboxOption[];
+  onSuccess: () => void;
 }
 
 interface SelectedProduct {
@@ -59,6 +64,7 @@ interface SelectedProduct {
 const UpsertSheetContent = ({
   products,
   productsOptions,
+  onSuccess,
 }: UpsertSheetContentProps) => {
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct[]>([]);
 
@@ -132,8 +138,27 @@ const UpsertSheetContent = ({
     );
   };
 
+  const onSubmitSale = async () => {
+    try {
+      await createSale({
+        products: selectedProduct.map((product) => ({
+          id: product.id,
+          quantity: product.quantity,
+        })),
+      });
+      toast.success("Venda criada com sucesso!");
+      setSelectedProduct([]);
+      onSuccess();
+    } catch (error) {
+      console.error("Erro ao criar venda:", error);
+      toast.error(
+        "Ocorreu um erro ao criar a venda. Por favor, tente novamente.",
+      );
+    }
+  };
+
   return (
-    <SheetContent className="!max-w-[700px]">
+    <SheetContent className="!max-w-[700px] space-y-6">
       <SheetHeader className="py-6">
         <SheetTitle>Nova venda</SheetTitle>
         <SheetDescription>Insira as informações da nova venda</SheetDescription>
@@ -188,7 +213,7 @@ const UpsertSheetContent = ({
       <Table>
         <TableCaption>
           <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
-            <div className="animate-fade h-3 w-3 rounded-full bg-green-500"></div>
+            <div className="h-3 w-3 animate-fade rounded-full bg-green-500"></div>
             <p>Produtos adicionados à venda</p>
           </div>
         </TableCaption>
@@ -227,6 +252,16 @@ const UpsertSheetContent = ({
           </TableRow>
         </TableFooter>
       </Table>
+      <SheetFooter>
+        <Button
+          disabled={selectedProduct.length === 0}
+          className="w-full"
+          onClick={onSubmitSale}
+        >
+          <CheckIcon size={20} />
+          Finalizar venda
+        </Button>
+      </SheetFooter>
     </SheetContent>
   );
 };
