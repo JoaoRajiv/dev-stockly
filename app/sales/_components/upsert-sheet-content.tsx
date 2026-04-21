@@ -37,7 +37,8 @@ import { z } from "zod";
 import SalesDropDownMenu from "./table-dropdown-menu";
 import { createSale } from "@/app/_actions/sale/create-sale";
 import { toast } from "sonner";
-import { cachedGetProducts } from "@/app/_data-access/products/get-products";
+import { useAction } from "next-safe-action/hooks";
+import { flattenValidationErrors } from "next-safe-action";
 
 const formSchema = z.object({
   productId: z.string().uuid({
@@ -67,6 +68,18 @@ const UpsertSheetContent = ({
   onSuccess,
 }: UpsertSheetContentProps) => {
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct[]>([]);
+
+  const { execute: executeCreateSale } = useAction(createSale, {
+    onError: ({ error: { validationErrors, serverError } }) => {
+      const flattenedErrors = flattenValidationErrors(validationErrors);
+      toast.error(serverError ?? flattenedErrors.formErrors[0]);
+    },
+    onSuccess: () => {
+      toast.success("Venda criada com sucesso!");
+      setSelectedProduct([]);
+      onSuccess();
+    },
+  });
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -106,8 +119,8 @@ const UpsertSheetContent = ({
           return product;
         });
       }
-
-      if (data.quantity > selectedProduct.stock) {
+      const productIsOutOfStock = data.quantity > selectedProduct.stock;
+      if (productIsOutOfStock) {
         form.setError("quantity", {
           message: `Quantidade excede o estoque disponível (${selectedProduct.stock})`,
         });
@@ -139,22 +152,12 @@ const UpsertSheetContent = ({
   };
 
   const onSubmitSale = async () => {
-    try {
-      await createSale({
-        products: selectedProduct.map((product) => ({
-          id: product.id,
-          quantity: product.quantity,
-        })),
-      });
-      toast.success("Venda criada com sucesso!");
-      setSelectedProduct([]);
-      onSuccess();
-    } catch (error) {
-      console.error("Erro ao criar venda:", error);
-      toast.error(
-        "Ocorreu um erro ao criar a venda. Por favor, tente novamente.",
-      );
-    }
+    executeCreateSale({
+      products: selectedProduct.map((product) => ({
+        id: product.id,
+        quantity: product.quantity,
+      })),
+    });
   };
 
   return (
