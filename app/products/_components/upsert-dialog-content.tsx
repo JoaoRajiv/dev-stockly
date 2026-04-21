@@ -1,6 +1,6 @@
 "use client";
 
-import { upsertProducts } from "@/app/_actions/product/upsert-product";
+import { upsertProduct } from "@/app/_actions/product/upsert-product";
 import {
   upsertProductSchema,
   UpsertProductSchema,
@@ -28,16 +28,31 @@ import { Input } from "@/app/_components/ui/input";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { toast } from "sonner";
+import { useAction } from "next-safe-action/hooks";
+import { Dispatch, SetStateAction } from "react";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProductSchema;
-  onSuccess?: () => void;
+  setDialogIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const UpsertProductDialogContent = ({
   defaultValues,
-  onSuccess,
+  setDialogIsOpen,
 }: UpsertProductDialogContentProps) => {
+  const { execute: executeUpsertProduct } = useAction(upsertProduct, {
+    onSuccess: () => {
+      setDialogIsOpen(false);
+      toast.success(
+        `Produto ${defaultValues ? "atualizado" : "criado"} com sucesso!`,
+      );
+      setDialogIsOpen(false);
+    },
+    onError: (error) => {
+      console.error("Error creating/updating product:", error);
+      toast.error(`Erro ao ${defaultValues ? "atualizar" : "criar"} produto.`);
+    },
+  });
   const form = useForm<UpsertProductSchema>({
     shouldUnregister: true,
     resolver: zodResolver(upsertProductSchema),
@@ -53,16 +68,7 @@ const UpsertProductDialogContent = ({
   const isEditting = !!defaultValues;
 
   const onSubmit = async (data: UpsertProductSchema) => {
-    try {
-      await upsertProducts({ ...data, id: defaultValues?.id });
-      toast.success(
-        `Produto ${isEditting ? "atualizado" : "criado"} com sucesso!`,
-      );
-      onSuccess?.();
-    } catch (error) {
-      console.error("Error creating product:", error);
-      toast.error("Erro ao criar produto.");
-    }
+    executeUpsertProduct(data);
   };
   return (
     <DialogContent>
