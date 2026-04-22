@@ -1,20 +1,27 @@
 "use client";
 
-import { Badge } from "@/app/_components/ui/badge";
-import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
 import ProductDropdownMenu from "./products-dropdown-menu";
+import { ProductDto } from "@/app/_data-access/products/get-products";
+import ProductStatusBadge from "@/app/_components/product-status-badge";
+import { Button } from "@/app/_components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
-const getStatusLabel = (stock: number) => {
-  if (stock === 0) return "Esgotado";
-  return "Em estoque";
-};
-
-export const productTableColumns: ColumnDef<Product>[] = [
+export const productTableColumns: ColumnDef<ProductDto>[] = [
   {
     accessorKey: "name",
-    header: "Produto",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Produto
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "price",
@@ -29,25 +36,34 @@ export const productTableColumns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: "stock",
-    header: "Estoque",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Estoque
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const product = row.original;
-      const label = getStatusLabel(product.stock);
-      return (
-        <Badge
-          variant={label === "Esgotado" ? "destructive" : "default"}
-          className={`gap-1.5 text-xs ${label === "Esgotado" ? "bg-destructive/10 text-destructive" : "bg-primary/10 text-primary"} px-1 hover:bg-transparent`}
-        >
-          <span
-            className={`h-2.5 w-2.5 rounded-full ${label === "Esgotado" ? "bg-destructive" : "bg-primary"}`}
-          />
-          {label}
-        </Badge>
-      );
+      return <ProductStatusBadge status={product.status} />;
     },
   },
   {
