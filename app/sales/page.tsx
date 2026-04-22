@@ -17,12 +17,17 @@ const SalesPage = async () => {
       value: product.id,
     }),
   );
+  const tableData = sales.map((sale) => ({
+    ...sale,
+    products,
+    productsOptions,
+  }));
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md">
       <div className="flex w-full items-center justify-between">
         <div className="space-y-1">
           <span className="text-xs font-semibold text-foreground">
-            Gestão de Produtos
+            Gestão de Vendas
           </span>
           <h2 className="text-2xl font-semibold">Vendas</h2>
         </div>
@@ -34,7 +39,7 @@ const SalesPage = async () => {
 
       <DataTable
         columns={saleTableColumns}
-        data={JSON.parse(JSON.stringify(sales))}
+        data={JSON.parse(JSON.stringify(tableData))}
       />
     </div>
   );

@@ -28,9 +28,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/_components/ui/table";
+import { ProductDto } from "@/app/_data-access/products/get-products";
 import { formatCurrency } from "@/app/_helpers/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product } from "@prisma/client";
 import { CheckIcon, PlusIcon } from "lucide-react";
 import { flattenValidationErrors } from "next-safe-action";
 import { useAction } from "next-safe-action/hooks";
@@ -51,9 +51,10 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 interface UpsertSheetContentProps {
-  products: Product[];
+  products: ProductDto[];
   productsOptions: ComboboxOption[];
   onSuccess: () => void;
+  defaultSelectedProducts?: SelectedProduct[];
 }
 
 interface SelectedProduct {
@@ -67,8 +68,11 @@ const UpsertSheetContent = ({
   products,
   productsOptions,
   onSuccess,
+  defaultSelectedProducts,
 }: UpsertSheetContentProps) => {
-  const [selectedProduct, setSelectedProduct] = useState<SelectedProduct[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<SelectedProduct[]>(
+    defaultSelectedProducts ?? [],
+  );
 
   const { execute: executeCreateSale } = useAction(createSale, {
     onError: ({ error: { validationErrors, serverError } }) => {
