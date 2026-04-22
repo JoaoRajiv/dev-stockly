@@ -34,7 +34,7 @@ import { CheckIcon, PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import SalesDropDownMenu from "./table-dropdown-menu";
+import UpsertSalesDropDownMenu from "./upsert-table-dropdown-menu";
 import { createSale } from "@/app/_actions/sale/create-sale";
 import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
@@ -239,7 +239,7 @@ const UpsertSheetContent = ({
                 {formatCurrency(product.price * product.quantity)}
               </TableCell>
               <TableCell>
-                <SalesDropDownMenu
+                <UpsertSalesDropDownMenu
                   onDelete={onDelete}
                   product={{ id: product.id, name: product.name }}
                 />
