@@ -1,24 +1,30 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import { Sale } from "@prisma/client";
+import { SalesDTO } from "@/app/_data-access/sale/get-sales";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreVerticalIcon } from "lucide-react";
+import { MoreHorizontalIcon } from "lucide-react";
 
-export const saleTableColumns: ColumnDef<Sale>[] = [
+export const saleTableColumns: ColumnDef<SalesDTO>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "productNames",
     header: "Produtos",
   },
   {
+    accessorKey: "totalProducts",
     header: "Quantidade",
-    cell: () => <span>30</span>,
   },
   {
+    accessorKey: "totalValue",
     header: "Valor Total",
-    cell: () => <span>R$ 100,00</span>,
+    cell: ({
+      row: {
+        original: { totalValue },
+      },
+    }) => <span>R$ {totalValue}</span>,
   },
   {
+    accessorKey: "date",
     header: "Data",
     cell: ({
       row: {
@@ -30,7 +36,7 @@ export const saleTableColumns: ColumnDef<Sale>[] = [
     header: "Ações",
     cell: () => (
       <Button variant="ghost" size="sm">
-        <MoreVerticalIcon size={20} />
+        <MoreHorizontalIcon size={20} />
       </Button>
     ),
   },
