@@ -1,12 +1,12 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-
-import ProductDropdownMenu from "./products-dropdown-menu";
-import { ProductDto } from "@/app/_data-access/products/get-products";
 import ProductStatusBadge from "@/app/_components/product-status-badge";
 import { Button } from "@/app/_components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ProductDto } from "@/app/_data-access/products/get-products";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowDown, ArrowUp } from "lucide-react";
+
+import ProductDropdownMenu from "./products-dropdown-menu";
 
 export const productTableColumns: ColumnDef<ProductDto>[] = [
   {
@@ -18,7 +18,11 @@ export const productTableColumns: ColumnDef<ProductDto>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Produto
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === "asc" ? (
+            <ArrowUp className="h-4 w-4" />
+          ) : (
+            <ArrowDown className="h-4 w-4" />
+          )}
         </Button>
       );
     },
@@ -43,7 +47,11 @@ export const productTableColumns: ColumnDef<ProductDto>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Estoque
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === "asc" ? (
+            <ArrowUp className="h-4 w-4" />
+          ) : (
+            <ArrowDown className="h-4 w-4" />
+          )}
         </Button>
       );
     },
@@ -57,7 +65,11 @@ export const productTableColumns: ColumnDef<ProductDto>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {column.getIsSorted() === "asc" ? (
+            <ArrowUp className="h-4 w-4" />
+          ) : (
+            <ArrowDown className="h-4 w-4" />
+          )}
         </Button>
       );
     },

@@ -3,7 +3,9 @@
 import { Button } from "@/app/_components/ui/button";
 import { SalesDTO } from "@/app/_data-access/sale/get-sales";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontalIcon } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
+
+import SalesTableDropdownMenu from "./table-dropdown-menu";
 
 export const saleTableColumns: ColumnDef<SalesDTO>[] = [
   {
@@ -25,7 +27,17 @@ export const saleTableColumns: ColumnDef<SalesDTO>[] = [
   },
   {
     accessorKey: "date",
-    header: "Data",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Data
+          <ArrowUpDown className="h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({
       row: {
         original: { date },
@@ -34,10 +46,8 @@ export const saleTableColumns: ColumnDef<SalesDTO>[] = [
   },
   {
     header: "Ações",
-    cell: () => (
-      <Button variant="ghost" size="sm">
-        <MoreHorizontalIcon size={20} />
-      </Button>
+    cell: ({ row: { original: sale } }) => (
+      <SalesTableDropdownMenu sale={sale} />
     ),
   },
 ];

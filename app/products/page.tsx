@@ -1,7 +1,7 @@
 import { DataTable } from "../_components/ui/data-table";
-import { productTableColumns } from "./_components/table-columns";
 import { cachedGetProducts } from "../_data-access/products/get-products";
 import AddProductButton from "./_components/create-product-button";
+import { productTableColumns } from "./_components/table-columns";
 
 export const revalidate = 10;
 

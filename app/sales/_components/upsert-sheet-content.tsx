@@ -1,4 +1,5 @@
 "use client";
+import { createSale } from "@/app/_actions/sale/create-sale";
 import { Button } from "@/app/_components/ui/button";
 import { Combobox, ComboboxOption } from "@/app/_components/ui/combobox";
 import {
@@ -19,26 +20,26 @@ import {
 } from "@/app/_components/ui/sheet";
 import {
   Table,
-  TableCaption,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
+  TableCaption,
   TableCell,
   TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/app/_components/ui/table";
 import { formatCurrency } from "@/app/_helpers/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from "@prisma/client";
 import { CheckIcon, PlusIcon } from "lucide-react";
+import { flattenValidationErrors } from "next-safe-action";
+import { useAction } from "next-safe-action/hooks";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import UpsertSalesDropDownMenu from "./upsert-table-dropdown-menu";
-import { createSale } from "@/app/_actions/sale/create-sale";
 import { toast } from "sonner";
-import { useAction } from "next-safe-action/hooks";
-import { flattenValidationErrors } from "next-safe-action";
+import { z } from "zod";
+
+import UpsertSalesDropDownMenu from "./upsert-table-dropdown-menu";
 
 const formSchema = z.object({
   productId: z.string().uuid({

@@ -3,16 +3,16 @@ import { Button } from "@/app/_components/ui/button";
 import { Dialog } from "@/app/_components/ui/dialog";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/app/_components/ui/dropdown-menu";
-import { MoreHorizontalIcon, ClipboardCopyIcon, TrashIcon } from "lucide-react";
+import { Product } from "@prisma/client";
+import { ClipboardCopyIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Product } from "@prisma/client";
 
 const handleClipboardCopy = (text: string, productName: string) => {
   navigator.clipboard.writeText(text);

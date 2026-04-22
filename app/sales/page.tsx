@@ -1,10 +1,11 @@
-import { getProducts } from "../_data-access/products/get-products";
-import { ComboboxOption } from "../_components/ui/combobox";
 import { Product } from "@prisma/client";
+
+import { ComboboxOption } from "../_components/ui/combobox";
+import { DataTable } from "../_components/ui/data-table";
+import { getProducts } from "../_data-access/products/get-products";
+import getSales from "../_data-access/sale/get-sales";
 import CreateSaleButton from "./_components/create-sale-button";
 import { saleTableColumns } from "./_components/table-columns";
-import { DataTable } from "../_components/ui/data-table";
-import getSales from "../_data-access/sale/get-sales";
 
 const SalesPage = async () => {
   const sales = await getSales();

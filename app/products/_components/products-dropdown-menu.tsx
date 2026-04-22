@@ -6,23 +6,24 @@ import { Button } from "@/app/_components/ui/button";
 import { Dialog, DialogTrigger } from "@/app/_components/ui/dialog";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/app/_components/ui/dropdown-menu";
+import { ProductDto } from "@/app/_data-access/products/get-products";
 import {
-  MoreHorizontalIcon,
   ClipboardCopyIcon,
+  MoreHorizontalIcon,
   PencilIcon,
   TrashIcon,
 } from "lucide-react";
-import DeleteProductDialogContent from "./delete-dialog";
-import UpsertProductDialogContent from "./upsert-dialog-content";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Product } from "@prisma/client";
+
+import DeleteProductDialogContent from "./delete-dialog";
+import UpsertProductDialogContent from "./upsert-dialog-content";
 
 const handleClipboardCopy = (text: string, productName: string) => {
   navigator.clipboard.writeText(text);
@@ -30,7 +31,7 @@ const handleClipboardCopy = (text: string, productName: string) => {
 };
 
 interface ProductDropdownMenuProps {
-  product: Product;
+  product: ProductDto;
 }
 
 const ProductDropdownMenu = ({ product }: ProductDropdownMenuProps) => {
