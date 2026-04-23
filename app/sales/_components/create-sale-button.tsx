@@ -8,12 +8,12 @@ import { useState } from "react";
 
 import UpsertSheetContent from "../_components/upsert-sheet-content";
 
-interface CreateSaleButtonProps {
+interface UpsertSaleButtonProps {
   products: Product[];
   productsOptions: ComboboxOption[];
 }
 
-const CreateSaleButton = (props: CreateSaleButtonProps) => {
+const UpsertSaleButton = (props: UpsertSaleButtonProps) => {
   const [sheetIsOpnen, setSheetIsOpen] = useState(false);
   return (
     <Sheet open={sheetIsOpnen} onOpenChange={setSheetIsOpen}>
@@ -28,4 +28,4 @@ const CreateSaleButton = (props: CreateSaleButtonProps) => {
   );
 };
 
-export default CreateSaleButton;
+export default UpsertSaleButton;

@@ -3,13 +3,13 @@
 import { Button } from "@/app/_components/ui/button";
 import { ComboboxOption } from "@/app/_components/ui/combobox";
 import { ProductDto } from "@/app/_data-access/products/get-products";
-import { SalesDTO } from "@/app/_data-access/sale/get-sales";
+import { SaleDto } from "@/app/_data-access/sale/get-sales";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import SalesTableDropdownMenu from "./table-dropdown-menu";
 
-interface SaleTableColumn extends SalesDTO {
+interface SaleTableColumn extends SaleDto {
   products: ProductDto[];
   productsOptions: ComboboxOption[];
 }
@@ -24,13 +24,13 @@ export const saleTableColumns: ColumnDef<SaleTableColumn>[] = [
     header: "Quantidade",
   },
   {
-    accessorKey: "totalValue",
+    accessorKey: "totalAmount",
     header: "Valor Total",
     cell: ({
       row: {
-        original: { totalValue },
+        original: { totalAmount },
       },
-    }) => <span>R$ {totalValue}</span>,
+    }) => <span>R$ {totalAmount.toFixed(2)}</span>,
   },
   {
     accessorKey: "date",

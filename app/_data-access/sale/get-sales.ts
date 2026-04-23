@@ -1,55 +1,51 @@
 import { db } from "@/app/_lib/prisma";
 
-export interface SaleProductDTO {
-  id: string;
-  name: string;
+interface SaleProductDto {
+  productId: string;
   quantity: number;
   unitPrice: number;
   productName: string;
 }
 
-export interface SalesDTO {
+export interface SaleDto {
   id: string;
-  productNames: string[];
+  productNames: string;
   totalProducts: number;
-  totalValue: number;
+  totalAmount: number;
   date: Date;
-  saleProducts: SaleProductDTO[];
+  saleProducts: SaleProductDto[];
 }
 
-const getSales = async (): Promise<SalesDTO[]> => {
+export const getSales = async (): Promise<SaleDto[]> => {
   const sales = await db.sale.findMany({
     include: {
-      products: {
-        include: {
-          product: true,
-        },
+      saleProducts: {
+        include: { product: true },
       },
     },
   });
-  // @ts-expect-error - This is needed to facilitate the serialization
   return sales.map((sale) => ({
     id: sale.id,
     date: sale.date,
-    productNames: sale.products
+    productNames: sale.saleProducts
       .map((saleProduct) => saleProduct.product.name)
-      .join(" / "),
-    totalProducts: sale.products.reduce(
-      (acc, product) => acc + product.quantity,
+      .join(" • "),
+    totalAmount: sale.saleProducts.reduce(
+      (acc, saleProduct) =>
+        acc + saleProduct.quantity * Number(saleProduct.unitPrice),
       0,
     ),
-    totalValue: sale.products.reduce(
-      (acc, products) => acc + Number(products.unitPrice) * products.quantity,
+    totalProducts: sale.saleProducts.reduce(
+      (acc, saleProduct) => acc + saleProduct.quantity,
       0,
     ),
-    saleProducts: sale.products.map((saleProduct) => ({
-      id: saleProduct.id,
-      name: saleProduct.product.name,
-      quantity: saleProduct.quantity,
-      unitPrice: saleProduct.unitPrice,
-      productName: saleProduct.product.name,
-    })),
+    saleProducts: sale.saleProducts.map(
+      (saleProduct): SaleProductDto => ({
+        productId: saleProduct.productId,
+        productName: saleProduct.product.name,
+        quantity: saleProduct.quantity,
+        unitPrice: Number(saleProduct.unitPrice),
+      }),
+    ),
   }));
 };
-
-export default getSales;

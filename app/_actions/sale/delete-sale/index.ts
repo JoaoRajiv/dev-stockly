@@ -9,10 +9,30 @@ import { deleteSaleSchema } from "./schema";
 export const deleteSale = actionClient
   .schema(deleteSaleSchema)
   .action(async ({ parsedInput: { id } }) => {
-    await db.sale.delete({
-      where: {
-        id,
-      },
+    await db.$transaction(async (tx) => {
+      const sale = await tx.sale.findUnique({
+        where: { id },
+        include: {
+          products: true,
+        },
+      });
+      await tx.sale.delete({
+        where: {
+          id,
+        },
+      });
+      for (const product of sale?.products || []) {
+        await tx.product.update({
+          where: {
+            id: product.productId,
+          },
+          data: {
+            stock: {
+              increment: product.quantity,
+            },
+          },
+        });
+      }
     });
     revalidatePath("/sales");
     revalidateTag("get-products");

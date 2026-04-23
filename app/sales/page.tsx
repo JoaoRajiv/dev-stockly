@@ -3,8 +3,8 @@ import { Product } from "@prisma/client";
 import { ComboboxOption } from "../_components/ui/combobox";
 import { DataTable } from "../_components/ui/data-table";
 import { getProducts } from "../_data-access/products/get-products";
-import getSales from "../_data-access/sale/get-sales";
-import CreateSaleButton from "./_components/create-sale-button";
+import { getSales } from "../_data-access/sale/get-sales";
+import UpsertSaleButton from "./_components/create-sale-button";
 import { saleTableColumns } from "./_components/table-columns";
 
 const SalesPage = async () => {
@@ -31,7 +31,7 @@ const SalesPage = async () => {
           </span>
           <h2 className="text-2xl font-semibold">Vendas</h2>
         </div>
-        <CreateSaleButton
+        <UpsertSaleButton
           products={formatedProducts}
           productsOptions={productsOptions}
         />

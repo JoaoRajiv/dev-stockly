@@ -22,7 +22,7 @@ import {
 } from "@/app/_components/ui/dropdown-menu";
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { ProductDto } from "@/app/_data-access/products/get-products";
-import { SalesDTO } from "@/app/_data-access/sale/get-sales";
+import { SaleDto } from "@/app/_data-access/sale/get-sales";
 import {
   ClipboardCopyIcon,
   MoreHorizontalIcon,
@@ -36,7 +36,7 @@ import { toast } from "sonner";
 import UpsertSheetContent from "./upsert-sheet-content";
 
 interface SalesTableDropdownMenuProps {
-  sale: Pick<SalesDTO, "id" | "saleProducts">;
+  sale: Pick<SaleDto, "id" | "saleProducts">;
   products: ProductDto[];
   productsOptions: ComboboxOption[];
 }
@@ -111,13 +111,14 @@ const SalesTableDropdownMenu = ({
         </AlertDialogContent>
       </AlertDialog>
       <UpsertSheetContent
+        saleId={sale.id}
         productsOptions={productsOptions}
         products={products}
         onSuccess={() => {
           setUpsertSheetOpen(false);
         }}
         defaultSelectedProducts={sale.saleProducts.map((saleProduct) => ({
-          id: saleProduct.id,
+          id: saleProduct.productId,
           quantity: saleProduct.quantity,
           name: saleProduct.productName,
           price: saleProduct.unitPrice,
