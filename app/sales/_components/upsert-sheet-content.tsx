@@ -50,19 +50,18 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
+interface SelectedProduct {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
 interface UpsertSheetContentProps {
   saleId?: string;
   products: ProductDto[];
   productsOptions: ComboboxOption[];
   onSuccess: () => void;
   defaultSelectedProducts?: SelectedProduct[];
-}
-
-interface SelectedProduct {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
 }
 
 const UpsertSheetContent = ({

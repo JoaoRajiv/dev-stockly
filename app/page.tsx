@@ -1,7 +1,19 @@
+import {
+  Header,
+  HeaderLeft,
+  HeaderSubtitle,
+  HeaderTitle,
+} from "./_components/header";
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Welcome to Stockly</h1>
+    <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md">
+      <Header>
+        <HeaderLeft>
+          <HeaderSubtitle>Visão geral</HeaderSubtitle>
+          <HeaderTitle>Dashboard</HeaderTitle>
+        </HeaderLeft>
+      </Header>
     </div>
   );
 }
