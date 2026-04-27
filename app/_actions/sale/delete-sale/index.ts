@@ -2,7 +2,7 @@
 
 import { db } from "@/app/_lib/prisma";
 import { actionClient } from "@/app/_lib/safe-action";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 import { deleteSaleSchema } from "./schema";
 
@@ -37,7 +37,5 @@ export const deleteSale = actionClient
         });
       }
     });
-    revalidatePath("/sales");
-    revalidateTag("get-products");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
   });

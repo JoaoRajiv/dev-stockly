@@ -1,9 +1,10 @@
 "use server";
 
 import { db } from "@/app/_lib/prisma";
-import { deleteProductSchema } from "./schema";
-import { revalidateTag } from "next/cache";
 import { actionClient } from "@/app/_lib/safe-action";
+import { revalidatePath } from "next/cache";
+
+import { deleteProductSchema } from "./schema";
 
 export const deleteProduct = actionClient
   .schema(deleteProductSchema)
@@ -14,5 +15,5 @@ export const deleteProduct = actionClient
       },
     });
     console.log("Produto deletado com id:", id);
-    revalidateTag("get-products");
+    revalidatePath("/", "layout");
   });
