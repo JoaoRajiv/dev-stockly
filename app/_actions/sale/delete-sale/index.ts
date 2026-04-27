@@ -13,15 +13,18 @@ export const deleteSale = actionClient
       const sale = await tx.sale.findUnique({
         where: { id },
         include: {
-          products: true,
+          saleProducts: true,
         },
       });
+      if (!sale) {
+        throw new Error("Sale not found");
+      }
       await tx.sale.delete({
         where: {
           id,
         },
       });
-      for (const product of sale?.products || []) {
+      for (const product of sale.saleProducts) {
         await tx.product.update({
           where: {
             id: product.productId,
@@ -36,4 +39,5 @@ export const deleteSale = actionClient
     });
     revalidatePath("/sales");
     revalidateTag("get-products");
+    revalidatePath("/");
   });
