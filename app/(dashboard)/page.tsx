@@ -1,4 +1,9 @@
-import { DollarSignIcon } from "lucide-react";
+import {
+  CircleDollarSignIcon,
+  DollarSignIcon,
+  PackageIcon,
+  ShoppingBasketIcon,
+} from "lucide-react";
 
 import {
   Header,
@@ -6,11 +11,19 @@ import {
   HeaderSubtitle,
   HeaderTitle,
 } from "../_components/header";
-import SummaryCard from "./summary-card";
+import { getDashboard } from "../_data-access/dashboard/get-dashboard";
+import { formatCurrency } from "../_helpers/currency";
+import SummaryCard, {
+  SummarryCardIcon,
+  SummaryCardTitle,
+  SummaryCardValue,
+} from "./summary-card";
 
-export default function Home() {
+export const Home = async () => {
+  const { totalRevenue, todayRevenue, totalSales, totalStock, totalProducts } =
+    await getDashboard();
   return (
-    <div className="m-4 w-full space-y-8 rounded-2xl  ">
+    <div className="m-4 w-full space-y-8 rounded-2xl">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Visão geral</HeaderSubtitle>
@@ -18,12 +31,46 @@ export default function Home() {
         </HeaderLeft>
       </Header>
       <div className="grid grid-cols-2 gap-6">
-        <SummaryCard
-          icon={<DollarSignIcon />}
-          title="Receita Total"
-          value="$12,345"
-        />
+        <SummaryCard>
+          <SummarryCardIcon>
+            <DollarSignIcon />
+          </SummarryCardIcon>
+          <SummaryCardTitle>Receita Total</SummaryCardTitle>
+          <SummaryCardValue>{formatCurrency(totalRevenue)}</SummaryCardValue>
+        </SummaryCard>
+        <SummaryCard>
+          <SummarryCardIcon>
+            <DollarSignIcon />
+          </SummarryCardIcon>
+          <SummaryCardTitle>Receita Hoje</SummaryCardTitle>
+          <SummaryCardValue>{formatCurrency(todayRevenue)}</SummaryCardValue>
+        </SummaryCard>
+      </div>
+      <div className="grid grid-cols-3 gap-6">
+        <SummaryCard>
+          <SummarryCardIcon>
+            <CircleDollarSignIcon />
+          </SummarryCardIcon>
+          <SummaryCardTitle>Vendas Totais</SummaryCardTitle>
+          <SummaryCardValue>{totalSales}</SummaryCardValue>
+        </SummaryCard>
+        <SummaryCard>
+          <SummarryCardIcon>
+            <PackageIcon />
+          </SummarryCardIcon>
+          <SummaryCardTitle>Total em Estoque</SummaryCardTitle>
+          <SummaryCardValue>{totalStock}</SummaryCardValue>
+        </SummaryCard>
+        <SummaryCard>
+          <SummarryCardIcon>
+            <ShoppingBasketIcon />
+          </SummarryCardIcon>
+          <SummaryCardTitle>Produtos</SummaryCardTitle>
+          <SummaryCardValue>{totalProducts}</SummaryCardValue>
+        </SummaryCard>
       </div>
     </div>
   );
-}
+};
+
+export default Home;

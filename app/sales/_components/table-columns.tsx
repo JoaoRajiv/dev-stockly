@@ -4,6 +4,7 @@ import { Button } from "@/app/_components/ui/button";
 import { ComboboxOption } from "@/app/_components/ui/combobox";
 import { ProductDto } from "@/app/_data-access/products/get-products";
 import { SaleDto } from "@/app/_data-access/sale/get-sales";
+import { formatCurrency } from "@/app/_helpers/currency";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
@@ -30,7 +31,7 @@ export const saleTableColumns: ColumnDef<SaleTableColumn>[] = [
       row: {
         original: { totalAmount },
       },
-    }) => <span>R$ {totalAmount.toFixed(2)}</span>,
+    }) => <span>{formatCurrency(totalAmount)}</span>,
   },
   {
     accessorKey: "date",
