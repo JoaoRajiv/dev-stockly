@@ -1,3 +1,4 @@
+import { Skeleton } from "@/app/_components/ui/skeleton";
 import { ReactNode } from "react";
 
 import { Card } from "../../_components/ui/card";
@@ -23,3 +24,15 @@ const SummaryCard = ({ children }: { children: ReactNode }) => {
 };
 
 export default SummaryCard;
+
+export const SummarCardSkeleton = () => {
+  return (
+    <Skeleton className="bg-white rounded-2xl p-6">
+      <div className="space-y-2">
+        <Skeleton className="h-9 w-9" />
+        <Skeleton className="h-6 w-1/3" />
+        <Skeleton className="h-6 w-2/3" />
+      </div>
+    </Skeleton>
+  );
+};
