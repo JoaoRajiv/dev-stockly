@@ -6,8 +6,8 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "../_components/ui/chart";
-import { DayTotalRevenueDto } from "../_data-access/dashboard/get-dashboard";
+} from "../../_components/ui/chart";
+import { DayTotalRevenueDto } from "../../_data-access/dashboard/get-dashboard";
 
 const chartConfig: ChartConfig = {
   totalRevenue: {

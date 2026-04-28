@@ -13,12 +13,13 @@ import {
 } from "../_components/header";
 import { getDashboard } from "../_data-access/dashboard/get-dashboard";
 import { formatCurrency } from "../_helpers/currency";
-import RevenueChart from "./revenue-chart";
+import MostSoldProductsItem from "./_components/most-sold-products-item";
+import RevenueChart from "./_components/revenue-chart";
 import SummaryCard, {
   SummarryCardIcon,
   SummaryCardTitle,
   SummaryCardValue,
-} from "./summary-card";
+} from "./_components/summary-card";
 
 export const Home = async () => {
   const {
@@ -28,6 +29,7 @@ export const Home = async () => {
     totalStock,
     totalProducts,
     totalLast14DaysRevenue,
+    mostSoldProducts,
   } = await getDashboard();
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl flex flex-col">
@@ -76,10 +78,20 @@ export const Home = async () => {
           <SummaryCardValue>{totalProducts}</SummaryCardValue>
         </SummaryCard>
       </div>
-      <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white p-6 shadow-md">
-        <p className="text-lg font-semibold">Receita</p>
-        <p className="text-sm text-gray-600">Últimos 14 dias</p>
-        <RevenueChart data={totalLast14DaysRevenue} />
+      <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
+        <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white p-6 shadow-md">
+          <p className="text-lg font-semibold">Receita</p>
+          <p className="text-sm text-gray-600">Últimos 14 dias</p>
+          <RevenueChart data={totalLast14DaysRevenue} />
+        </div>
+        <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white shadow-md">
+          <p className=" p-6 text-lg font-semibold">Produtos mais vendidos</p>
+          <div className="overflow-y-auto space-y-7 px-6 pb-6">
+            {mostSoldProducts.map((product) => (
+              <MostSoldProductsItem key={product.productId} product={product} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

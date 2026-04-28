@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { Card } from "../_components/ui/card";
+import { Card } from "../../_components/ui/card";
 
 export const SummarryCardIcon = ({ children }: { children: ReactNode }) => {
   return (
