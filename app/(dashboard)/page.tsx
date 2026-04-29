@@ -7,9 +7,11 @@ import {
   HeaderTitle,
 } from "../_components/header";
 import { Skeleton } from "../_components/ui/skeleton";
-import { getDashboard } from "../_data-access/dashboard/get-dashboard";
 import Last14DaysRevenueCard from "./_components/last-14-days-revenue-card";
-import MostSoldProductsItem from "./_components/most-sold-products-item";
+import MostSoldProducts from "./_components/most-sold-products";
+import MostSoldProductsItem, {
+  MostSoldProductsItemSkeleton,
+} from "./_components/most-sold-products-item";
 import RevenueChart from "./_components/revenue-chart";
 import { SummarCardSkeleton } from "./_components/summary-card";
 import TodayRevenueCard from "./_components/today-revenue-card";
@@ -19,7 +21,6 @@ import TotalSalesCard from "./_components/total-sales-card";
 import TotalStockCard from "./_components/total-stock-card";
 
 export const Home = async () => {
-  const { mostSoldProducts } = await getDashboard();
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl flex flex-col">
       <Header>
@@ -57,22 +58,17 @@ export const Home = async () => {
           fallback={
             <Skeleton className="bg-white ">
               <div className="p-6 space-y-2">
-                <Skeleton className="h-7 w-1/6" />
-                <Skeleton className="h-5 w-2/6" />
+                <Skeleton className="h-5 w-1/6" />
+                <Skeleton className="h-4 w-2/6" />
               </div>
             </Skeleton>
           }
         >
           <Last14DaysRevenueCard />
         </Suspense>
-        <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white shadow-md">
-          <p className=" p-6 text-lg font-semibold">Produtos mais vendidos</p>
-          <div className="overflow-y-auto space-y-7 px-6 pb-6">
-            {mostSoldProducts.map((product) => (
-              <MostSoldProductsItem key={product.productId} product={product} />
-            ))}
-          </div>
-        </div>
+        <Suspense fallback={<MostSoldProductsItemSkeleton />}>
+          <MostSoldProducts />
+        </Suspense>
       </div>
     </div>
   );
