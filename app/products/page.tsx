@@ -16,7 +16,7 @@ export default async function Home() {
   // Chamar banco
   const products = await cachedGetProducts();
   return (
-    <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md">
+    <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md overflow-auto">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Gestão de Produtos</HeaderSubtitle>
