@@ -7,8 +7,9 @@ import SummaryCard, {
   SummaryCardValue,
 } from "./summary-card";
 
-const TotalSalesCard = () => {
-  const totalSales = getTotalSales();
+const TotalSalesCard = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+  const totalSales = await getTotalSales();
   return (
     <SummaryCard>
       <SummarryCardIcon>

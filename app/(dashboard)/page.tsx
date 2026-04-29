@@ -39,11 +39,17 @@ export const Home = async () => {
       </div>
       <div className="grid grid-cols-3 gap-6">
         {/* TOTAL DE VENDAS  */}
-        <TotalSalesCard />
+        <Suspense fallback={<SummarCardSkeleton />}>
+          <TotalSalesCard />
+        </Suspense>
         {/* TOTAL EM ESTOQUE  */}
-        <TotalStockCard />
+        <Suspense fallback={<SummarCardSkeleton />}>
+          <TotalStockCard />
+        </Suspense>
         {/* TOTAL DE PRODUTOS  */}
-        <TotalProductsCard />
+        <Suspense fallback={<SummarCardSkeleton />}>
+          <TotalProductsCard />
+        </Suspense>
       </div>
       <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
         <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white p-6 shadow-md">
