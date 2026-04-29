@@ -34,7 +34,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckIcon, PlusIcon } from "lucide-react";
 import { flattenValidationErrors } from "next-safe-action";
 import { useAction } from "next-safe-action/hooks";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -57,6 +57,7 @@ interface SelectedProduct {
   quantity: number;
 }
 interface UpsertSheetContentProps {
+  isOpen: boolean;
   saleId?: string;
   products: ProductDto[];
   productsOptions: ComboboxOption[];
@@ -65,6 +66,7 @@ interface UpsertSheetContentProps {
 }
 
 const UpsertSheetContent = ({
+  isOpen,
   saleId,
   products,
   productsOptions,
@@ -156,6 +158,16 @@ const UpsertSheetContent = ({
       currentProducts.filter((product) => product.id !== productId),
     );
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedProduct([]);
+      form.reset();
+    }
+  }, [form, isOpen]);
+  useEffect(() => {
+    setSelectedProduct(defaultSelectedProducts ?? []);
+  }, [defaultSelectedProducts]);
 
   const onSubmitSale = async () => {
     executeUpsertSale({
