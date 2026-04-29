@@ -1,4 +1,5 @@
 "use client";
+import { DayTotalRevenueDto } from "@/app/_data-access/dashboard/get-last-14-days-revenue";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
@@ -7,7 +8,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../../_components/ui/chart";
-import { DayTotalRevenueDto } from "../../_data-access/dashboard/get-dashboard";
 
 const chartConfig: ChartConfig = {
   totalRevenue: {

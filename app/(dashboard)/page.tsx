@@ -8,6 +8,7 @@ import {
 } from "../_components/header";
 import { Skeleton } from "../_components/ui/skeleton";
 import { getDashboard } from "../_data-access/dashboard/get-dashboard";
+import Last14DaysRevenueCard from "./_components/last-14-days-revenue-card";
 import MostSoldProductsItem from "./_components/most-sold-products-item";
 import RevenueChart from "./_components/revenue-chart";
 import { SummarCardSkeleton } from "./_components/summary-card";
@@ -18,7 +19,7 @@ import TotalSalesCard from "./_components/total-sales-card";
 import TotalStockCard from "./_components/total-stock-card";
 
 export const Home = async () => {
-  const { totalLast14DaysRevenue, mostSoldProducts } = await getDashboard();
+  const { mostSoldProducts } = await getDashboard();
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl flex flex-col">
       <Header>
@@ -52,11 +53,18 @@ export const Home = async () => {
         </Suspense>
       </div>
       <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
-        <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white p-6 shadow-md">
-          <p className="text-lg font-semibold">Receita</p>
-          <p className="text-sm text-gray-600">Últimos 14 dias</p>
-          <RevenueChart data={totalLast14DaysRevenue} />
-        </div>
+        <Suspense
+          fallback={
+            <Skeleton className="bg-white ">
+              <div className="p-6 space-y-2">
+                <Skeleton className="h-7 w-1/6" />
+                <Skeleton className="h-5 w-2/6" />
+              </div>
+            </Skeleton>
+          }
+        >
+          <Last14DaysRevenueCard />
+        </Suspense>
         <div className="flex flex-col h-full overflow-hidden rounded-2xl bg-white shadow-md">
           <p className=" p-6 text-lg font-semibold">Produtos mais vendidos</p>
           <div className="overflow-y-auto space-y-7 px-6 pb-6">
