@@ -17,7 +17,7 @@ import TotalRevenueCard from "./_components/total-revenue-card";
 import TotalSalesCard from "./_components/total-sales-card";
 import TotalStockCard from "./_components/total-stock-card";
 
-export const Home = async () => {
+const Home = async () => {
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl flex flex-col">
       <Header>

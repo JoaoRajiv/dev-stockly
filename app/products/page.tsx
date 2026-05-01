@@ -12,7 +12,7 @@ import { productTableColumns } from "./_components/table-columns";
 
 export const revalidate = 10;
 
-export default async function Home() {
+export const Products = async () => {
   // Chamar banco
   const products = await cachedGetProducts();
   return (
@@ -33,4 +33,6 @@ export default async function Home() {
       />
     </div>
   );
-}
+};
+
+export default Products;
