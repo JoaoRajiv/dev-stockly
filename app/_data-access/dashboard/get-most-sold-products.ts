@@ -1,5 +1,7 @@
 import { db } from "@/app/_lib/prisma";
 
+import { ProductStatusDto } from "../products/get-products";
+
 export const getMostSoldProducts = async () => {
   const mostSoldProductsQuery = `
       SELECT "Product"."name", SUM("SaleProduct"."quantity") as "totalSold", "Product"."price", "Product"."stock", "Product"."id" as "productId"
@@ -17,12 +19,13 @@ export const getMostSoldProducts = async () => {
       totalSold: number;
       stock: number;
       price: number;
+      status: ProductStatusDto;
     }[]
   >(mostSoldProductsQuery);
   return mostSoldProducts.map((product) => ({
     ...product,
     totalSold: Number(product.totalSold),
     price: Number(product.price),
-    status: product.stock > 0 ? "IN_STOCK" : "OUT_OF_STOCK",
+    status: product.status as ProductStatusDto,
   }));
 };

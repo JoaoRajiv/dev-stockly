@@ -6,13 +6,13 @@ import {
   HeaderTitle,
 } from "../_components/header";
 import { DataTable } from "../_components/ui/data-table";
-import { cachedGetProducts } from "../_data-access/products/get-products";
+import { getProducts } from "../_data-access/products/get-products";
 import AddProductButton from "./_components/create-product-button";
 import { productTableColumns } from "./_components/table-columns";
 
 const Products = async () => {
   // Chamar banco
-  const products = await cachedGetProducts();
+  const products = await getProducts();
   return (
     <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md overflow-auto">
       <Header>
