@@ -1,5 +1,6 @@
-import { db } from "@/app/_lib/prisma";
 import dayjs from "dayjs";
+
+import { db } from "@/app/_lib/prisma";
 
 export interface DayTotalRevenueDto {
   day: string;

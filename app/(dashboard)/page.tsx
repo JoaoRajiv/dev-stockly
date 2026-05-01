@@ -9,10 +9,7 @@ import {
 import { Skeleton } from "../_components/ui/skeleton";
 import Last14DaysRevenueCard from "./_components/last-14-days-revenue-card";
 import MostSoldProducts from "./_components/most-sold-products";
-import MostSoldProductsItem, {
-  MostSoldProductsItemSkeleton,
-} from "./_components/most-sold-products-item";
-import RevenueChart from "./_components/revenue-chart";
+import { MostSoldProductsItemSkeleton } from "./_components/most-sold-products-item";
 import { SummarCardSkeleton } from "./_components/summary-card";
 import TodayRevenueCard from "./_components/today-revenue-card";
 import TotalProductsCard from "./_components/total-products-card";

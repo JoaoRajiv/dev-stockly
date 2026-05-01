@@ -1,6 +1,7 @@
+import { DollarSignIcon } from "lucide-react";
+
 import { getTodayRevenue } from "@/app/_data-access/dashboard/get-today-revenue";
 import { formatCurrency } from "@/app/_helpers/currency";
-import { DollarSignIcon } from "lucide-react";
 
 import SummaryCard, {
   SummarryCardIcon,

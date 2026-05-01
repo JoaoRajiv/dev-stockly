@@ -1,5 +1,6 @@
-import { getTotalStock } from "@/app/_data-access/dashboard/get-total-stock";
 import { PackageIcon } from "lucide-react";
+
+import { getTotalStock } from "@/app/_data-access/dashboard/get-total-stock";
 
 import SummaryCard, {
   SummarryCardIcon,

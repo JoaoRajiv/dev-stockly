@@ -1,5 +1,6 @@
-import { getTotalProducts } from "@/app/_data-access/dashboard/get-total-products";
 import { ShoppingBasketIcon } from "lucide-react";
+
+import { getTotalProducts } from "@/app/_data-access/dashboard/get-total-products";
 
 import SummaryCard, {
   SummarryCardIcon,

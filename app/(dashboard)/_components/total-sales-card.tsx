@@ -1,5 +1,6 @@
-import { getTotalSales } from "@/app/_data-access/dashboard/get-total-sales";
 import { CircleDollarSignIcon } from "lucide-react";
+
+import { getTotalSales } from "@/app/_data-access/dashboard/get-total-sales";
 
 import SummaryCard, {
   SummarryCardIcon,

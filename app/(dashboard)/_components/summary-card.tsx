@@ -1,5 +1,6 @@
-import { Skeleton } from "@/app/_components/ui/skeleton";
 import { ReactNode } from "react";
+
+import { Skeleton } from "@/app/_components/ui/skeleton";
 
 import { Card } from "../../_components/ui/card";
 

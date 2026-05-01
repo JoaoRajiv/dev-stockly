@@ -1,10 +1,11 @@
 "use client";
 
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowDown, ArrowUp } from "lucide-react";
+
 import ProductStatusBadge from "@/app/_components/product-status-badge";
 import { Button } from "@/app/_components/ui/button";
 import { ProductDto } from "@/app/_data-access/products/get-products";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp } from "lucide-react";
 
 import ProductDropdownMenu from "./products-dropdown-menu";
 

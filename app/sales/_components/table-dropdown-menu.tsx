@@ -1,3 +1,13 @@
+import {
+  ClipboardCopyIcon,
+  MoreHorizontalIcon,
+  PencilIcon,
+  TrashIcon,
+} from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
+import { useState } from "react";
+import { toast } from "sonner";
+
 import { deleteSale } from "@/app/_actions/sale/delete-sale";
 import {
   AlertDialog,
@@ -23,15 +33,6 @@ import {
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { ProductDto } from "@/app/_data-access/products/get-products";
 import { SaleDto } from "@/app/_data-access/sale/get-sales";
-import {
-  ClipboardCopyIcon,
-  MoreHorizontalIcon,
-  PencilIcon,
-  TrashIcon,
-} from "lucide-react";
-import { useAction } from "next-safe-action/hooks";
-import { useState } from "react";
-import { toast } from "sonner";
 
 import UpsertSheetContent from "./upsert-sheet-content";
 

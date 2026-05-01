@@ -1,3 +1,6 @@
+import { useAction } from "next-safe-action/hooks";
+import { toast } from "sonner";
+
 import { deleteProduct } from "@/app/_actions/product/delete-product";
 import {
   AlertDialogAction,
@@ -8,8 +11,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/_components/ui/alert-dialog";
-import { useAction } from "next-safe-action/hooks";
-import { toast } from "sonner";
 
 interface DeleteProductDialogContentProps {
   productId: string;

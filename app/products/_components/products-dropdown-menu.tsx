@@ -1,4 +1,13 @@
 import {
+  ClipboardCopyIcon,
+  MoreHorizontalIcon,
+  PencilIcon,
+  TrashIcon,
+} from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+
+import {
   AlertDialog,
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
@@ -13,14 +22,6 @@ import {
   DropdownMenuTrigger,
 } from "@/app/_components/ui/dropdown-menu";
 import { ProductDto } from "@/app/_data-access/products/get-products";
-import {
-  ClipboardCopyIcon,
-  MoreHorizontalIcon,
-  PencilIcon,
-  TrashIcon,
-} from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 
 import DeleteProductDialogContent from "./delete-dialog";
 import UpsertProductDialogContent from "./upsert-dialog-content";

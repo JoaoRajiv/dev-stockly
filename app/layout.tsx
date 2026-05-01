@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import "./globals.css";
-import Sidebar from "./_components/sidebar";
+
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
+
+import Sidebar from "./_components/sidebar";
 
 const inter = Inter({
   subsets: ["latin"],

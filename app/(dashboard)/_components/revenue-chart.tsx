@@ -1,6 +1,7 @@
 "use client";
-import { DayTotalRevenueDto } from "@/app/_data-access/dashboard/get-last-14-days-revenue";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+
+import { DayTotalRevenueDto } from "@/app/_data-access/dashboard/get-last-14-days-revenue";
 
 import {
   ChartConfig,

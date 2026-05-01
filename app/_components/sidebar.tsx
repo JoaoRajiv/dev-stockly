@@ -1,5 +1,6 @@
 "use client";
 import { LayoutGridIcon, PackageIcon, ShoppingBasketIcon } from "lucide-react";
+
 import SidebarButton from "./sidebar-button";
 
 export default function Sidebar() {

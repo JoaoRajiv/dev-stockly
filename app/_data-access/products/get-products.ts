@@ -1,6 +1,7 @@
-import { db } from "@/app/_lib/prisma";
 import { Product } from "@prisma/client";
 import { unstable_cache } from "next/cache";
+
+import { db } from "@/app/_lib/prisma";
 
 export type ProductStatusDto = "IN_STOCK" | "OUT_OF_STOCK";
 

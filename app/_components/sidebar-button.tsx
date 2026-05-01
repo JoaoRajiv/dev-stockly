@@ -1,7 +1,8 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { Button } from "./ui/button";
 
 interface SidebarButtonProps {
   children: React.ReactNode;
