@@ -10,7 +10,6 @@ import SummaryCard, {
 } from "./summary-card";
 
 const TodayRevenueCard = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   const todayRevenue = await getTodayRevenue();
   return (
     <SummaryCard>

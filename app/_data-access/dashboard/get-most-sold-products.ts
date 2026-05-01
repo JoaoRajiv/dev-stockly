@@ -26,6 +26,6 @@ export const getMostSoldProducts = async () => {
     ...product,
     totalSold: Number(product.totalSold),
     price: Number(product.price),
-    status: product.status as ProductStatusDto,
+    status: product.stock > 0 ? "IN_STOCK" : "OUT_OF_STOCK",
   }));
 };
