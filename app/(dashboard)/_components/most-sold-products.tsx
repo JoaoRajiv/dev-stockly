@@ -11,7 +11,13 @@ const MostSoldProducts = async () => {
       <p className=" p-6 text-lg font-semibold">Produtos mais vendidos</p>
       <div className="overflow-y-auto space-y-7 px-6 pb-6">
         {mostSoldProducts.map((product) => (
-          <MostSoldProductsItem key={product.productId} product={product} />
+          <MostSoldProductsItem
+            key={product.productId}
+            product={{
+              ...product,
+              status: product.status as any,
+            }}
+          />
         ))}
       </div>
     </div>

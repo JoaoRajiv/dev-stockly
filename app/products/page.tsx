@@ -10,9 +10,7 @@ import { cachedGetProducts } from "../_data-access/products/get-products";
 import AddProductButton from "./_components/create-product-button";
 import { productTableColumns } from "./_components/table-columns";
 
-export const revalidate = 10;
-
-export const Products = async () => {
+const Products = async () => {
   // Chamar banco
   const products = await cachedGetProducts();
   return (
