@@ -1,10 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { returnValidationErrors } from "next-safe-action";
-
 import { db } from "@/app/_lib/prisma";
 import { actionClient } from "@/app/_lib/safe-action";
+import { returnValidationErrors } from "next-safe-action";
+import { revalidatePath } from "next/cache";
 
 import { upsertSaleSchema } from "./schema";
 
@@ -46,13 +45,11 @@ export const upsertSale = actionClient
         },
       });
       for (const product of products) {
-        console.log("Processing product", product);
         const productFromDb = await tx.product.findUnique({
           where: {
             id: product.id,
           },
         });
-        console.log("productFromDb", productFromDb);
         if (!productFromDb) {
           returnValidationErrors(upsertSaleSchema, {
             _errors: [`Produto com id ${product.id} não encontrado`],
