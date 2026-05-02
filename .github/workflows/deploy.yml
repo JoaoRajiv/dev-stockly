@@ -37,6 +37,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Fazer o Deploy via SST
-        run: npx sst deploy --stage production --refresh
+        run: npx sst deploy --stage production
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
