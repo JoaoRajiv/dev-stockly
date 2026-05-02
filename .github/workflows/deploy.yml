@@ -25,7 +25,7 @@ jobs:
       - name: Configurar credenciais da AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::SUA_CONTA_AWS:role/SuaRoleDoGitHub
+          role-to-assume: arn:aws:iam::354307070633:role/GitHubActionsSSTDeploy
           aws-region: sa-east-1
 
       - name: Instalar dependências
