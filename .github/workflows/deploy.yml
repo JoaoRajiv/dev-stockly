@@ -1,0 +1,38 @@
+name: SST Deploy
+
+on:
+  push:
+    branches:
+      - main # O deploy vai rodar sempre que você enviar código para a main
+
+# Permissões necessárias para usar o OIDC da AWS
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.12.0" # A versão que você usa no projeto
+
+      - name: Configurar credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::SUA_CONTA_AWS:role/SuaRoleDoGitHub
+          aws-region: sa-east-1
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Gerar Prisma Client
+        run: npx prisma generate
+
+      - name: Fazer o Deploy via SST
+        run: npx sst deploy --stage production

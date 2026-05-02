@@ -19,14 +19,14 @@ import TotalStockCard from "./_components/total-stock-card";
 
 const Home = async () => {
   return (
-    <div className="m-4 w-full space-y-8 rounded-2xl flex flex-col">
+    <div className="flex w-full min-w-0 flex-col space-y-4 rounded-2xl md:space-y-8">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Visão geral</HeaderSubtitle>
           <HeaderTitle>Dashboard</HeaderTitle>
         </HeaderLeft>
       </Header>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
         {/* RECEITA TOTAL  */}
         <Suspense fallback={<SummarCardSkeleton />}>
           <TotalRevenueCard />
@@ -36,7 +36,7 @@ const Home = async () => {
           <TodayRevenueCard />
         </Suspense>
       </div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
         {/* TOTAL DE VENDAS  */}
         <Suspense fallback={<SummarCardSkeleton />}>
           <TotalSalesCard />
@@ -50,7 +50,7 @@ const Home = async () => {
           <TotalProductsCard />
         </Suspense>
       </div>
-      <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
+      <div className="grid min-h-0 grid-cols-1 gap-4 lg:grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] lg:gap-6">
         <Suspense
           fallback={
             <Skeleton className="bg-white ">

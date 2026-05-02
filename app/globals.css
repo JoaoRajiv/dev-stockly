@@ -4,7 +4,7 @@
 
 html,
 body {
-  @apply h-full;
+  @apply min-h-screen;
 }
 
 body {
@@ -132,6 +132,6 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply overflow-x-hidden bg-background text-foreground;
   }
 }

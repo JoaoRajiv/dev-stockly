@@ -14,7 +14,7 @@ const Products = async () => {
   // Chamar banco
   const products = await getProducts();
   return (
-    <div className="m-4 w-full space-y-8 rounded-2xl bg-white p-8 shadow-md overflow-auto">
+    <div className="w-full space-y-8 rounded-2xl bg-white p-8 shadow-md overflow-x-auto">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Gestão de Produtos</HeaderSubtitle>
