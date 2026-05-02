@@ -33,6 +33,10 @@ jobs:
 
       - name: Gerar Prisma Client
         run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Fazer o Deploy via SST
         run: npx sst deploy --stage production
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
